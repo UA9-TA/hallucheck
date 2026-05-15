@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.coverage
+.hallucheck-index.json
+.hallucheck.toml

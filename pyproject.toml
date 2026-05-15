@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hallucheck"
+version = "0.1.0"
+description = "Detect hallucinated API calls, types, and functions in AI-generated code"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "UA9-TA", email = "vkrmsatsangi@gmail.com"}]
+keywords = ["ai", "hallucination", "linter", "developer-tools", "cli", "llm"]
+dependencies = [
+    "typer>=0.12",
+    "rich>=13",
+    "anthropic>=0.25",
+    "tomli>=2.0; python_version < '3.11'",
+    "tomli-w>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff", "pytest-mock", "pytest-cov"]
+
+[project.scripts]
+hallucheck = "hallucheck.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/UA9-TA/hallucheck"
+Repository = "https://github.com/UA9-TA/hallucheck"
+Changelog = "https://github.com/UA9-TA/hallucheck/blob/main/CHANGELOG.md"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--ignore=tests/fixtures"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]

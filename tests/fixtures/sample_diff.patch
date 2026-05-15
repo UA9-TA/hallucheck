@@ -1,0 +1,10 @@
+--- a/example.py
++++ b/example.py
+@@ -1,5 +1,8 @@
+ def process_login(user, data):
+-    return LoginResponse(token="abc", user_id=1)
++    from utils.crypto import sign_payload
++    perms = user.get_permissions()
++    token = sign_payload(data)
++    response: AuthResponse = AuthResponse(token=token, user_id=user.id)
++    return response
