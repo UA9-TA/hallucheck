@@ -22,9 +22,10 @@ class Hallucination:
 BUILTINS = set(dir(builtins))
 
 # Add common typing annotations
-BUILTINS.update({
-    "Any", "Optional", "List", "Dict", "Set", "Tuple", "Union", "Callable", "Sequence", "Mapping"
-})
+BUILTINS.update(
+    {"Any", "Optional", "List", "Dict", "Set", "Tuple", "Union", "Callable", "Sequence", "Mapping"}
+)
+
 
 def is_valid_module(module_name):
     """Check if a module exists in the environment (standard library or site-packages)."""
@@ -37,6 +38,7 @@ def is_valid_module(module_name):
         return spec is not None
     except Exception:
         return False
+
 
 def validate_diff(diff_lines, index):
     hallucinations = []
@@ -59,11 +61,47 @@ def validate_diff(diff_lines, index):
                 # For a method obj.foo(), name is 'foo'
                 # Builtin types have common methods we should allow
                 COMMON_METHODS = {
-                    "append", "extend", "insert", "remove", "pop", "clear", "index", "count", "sort", "reverse", "copy",
-                    "update", "keys", "values", "items", "get", "setdefault", "popitem",
-                    "add", "discard", "difference", "intersection", "union", "issubset", "issuperset",
-                    "split", "join", "replace", "strip", "lstrip", "rstrip", "format", "lower", "upper", "startswith", "endswith",
-                    "read", "write", "close", "seek", "tell"
+                    "append",
+                    "extend",
+                    "insert",
+                    "remove",
+                    "pop",
+                    "clear",
+                    "index",
+                    "count",
+                    "sort",
+                    "reverse",
+                    "copy",
+                    "update",
+                    "keys",
+                    "values",
+                    "items",
+                    "get",
+                    "setdefault",
+                    "popitem",
+                    "add",
+                    "discard",
+                    "difference",
+                    "intersection",
+                    "union",
+                    "issubset",
+                    "issuperset",
+                    "split",
+                    "join",
+                    "replace",
+                    "strip",
+                    "lstrip",
+                    "rstrip",
+                    "format",
+                    "lower",
+                    "upper",
+                    "startswith",
+                    "endswith",
+                    "read",
+                    "write",
+                    "close",
+                    "seek",
+                    "tell",
                 }
 
                 if name not in index and name not in COMMON_METHODS and not name.startswith("__"):
@@ -99,7 +137,11 @@ def validate_diff(diff_lines, index):
 
                 # We check if the imported name exists in the index
                 # Or if the module is a valid external module
-                if name not in index and not is_valid_module(module or name) and not is_valid_module(full_module):
+                if (
+                    name not in index
+                    and not is_valid_module(module or name)
+                    and not is_valid_module(full_module)
+                ):
                     suggestions = get_suggestions(name, index, limit=2)
                     full_ref = full_module
 
