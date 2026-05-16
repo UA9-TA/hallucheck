@@ -1,3 +1,6 @@
+import builtins
+import importlib.util
+import sys
 from dataclasses import dataclass
 from typing import List
 
@@ -14,10 +17,6 @@ class Hallucination:
     message: str
     suggestions: List[str]
 
-
-import builtins
-import sys
-import importlib.util
 
 # Get all Python built-in names
 BUILTINS = set(dir(builtins))
