@@ -1,0 +1,21 @@
+diff --git a/auth/validators.py b/auth/validators.py
+index a1b2c3d..e4f5g6h 100644
+--- a/auth/validators.py
++++ b/auth/validators.py
+@@ -33,4 +33,5 @@ def validate_user(user):
+     if not user.is_active:
+         return False
++    perms = user.get_permissions()
+     return True
+@@ -66,2 +67,3 @@ def process_payment():
+     payload = {"amount": 100}
++    from utils.crypto import sign_payload
+     signature = sign_payload(payload)
+diff --git a/payment/processor.py b/payment/processor.py
+index x1y2z3a..b4c5d6e 100644
+--- a/payment/processor.py
++++ b/payment/processor.py
+@@ -11,2 +11,3 @@ def handle_callback(data: dict):
+     user_id = data.get("user_id")
++    response: AuthResponse = process(data)
+     return True
